@@ -1,10 +1,10 @@
 class basicca::cert($storedir="/var/ssl", $subject) {
 
-	basicca::privatekey { "${name}-private":
+	class { "basicca::privatekey":
 		saveto => "{$storedir}/${name}.key",
 	}
 
-	basicca::csr { "${name}-csr":
+	class { "basicca::csr":
 		saveto => "{$storedir}/${name}.csr",
 		key	   => "{$storedir}/${name}.key",
 		subject => $subject,
