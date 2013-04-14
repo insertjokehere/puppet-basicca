@@ -1,12 +1,12 @@
-class basicca::cert($StoreDir="/var/ssl", $subject) {
+class basicca::cert($storedir="/var/ssl", $subject) {
 
 	basicca::privatekey { "${name}-private":
-		saveto => "{$StoreDir}/${name}.key",
+		saveto => "{$storedir}/${name}.key",
 	}
 
 	basicca::csr { "${name}-csr":
-		saveto => "{$StoreDir}/${name}.csr",
-		key	   => "{$StoreDir}/${name}.key",
+		saveto => "{$storedir}/${name}.csr",
+		key	   => "{$storedir}/${name}.key",
 		subject => $subject,
 		require => Basicca::Privatekey["${name}-private"],
 	}
