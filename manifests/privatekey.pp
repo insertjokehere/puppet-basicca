@@ -1,4 +1,4 @@
-class basicca::privatekey($numbits=2048, $owner="root", $group="root", $mode="0600", $saveto) {
+define basicca::privatekey($numbits=2048, $owner="root", $group="root", $mode="0600", $saveto) {
 
 	exec { $name:
 		command => "/usr/bin/openssl genrsa -out ${saveto} ${numbits}",
