@@ -13,7 +13,7 @@ define basicca::caadmin($ca=$name, $keyfile="/root/.ssh/ca.ssh", $pubkeyfile="/r
 	}
 
 	exec { "ssh-public-${fqdn}":
-		command => "/usr/bin/ssh-keygen -y -f ${keyfile} > ${pubkeyfile}"
+		command => "/usr/bin/ssh-keygen -y -f ${keyfile} > ${pubkeyfile}",
 		creates => $pubkeyfile,
 		require => Exec["ssh-private-${fqdn}"],
 	}
