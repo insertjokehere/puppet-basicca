@@ -1,9 +1,8 @@
 define basicca::caadmin($ca=$name, $keyfile="/root/.ssh/ca.ssh", $pubkeyfile="/root/.ssh/ca.pub") {
 
-	@@ssh_authorized_key {
+	@@ssh_authorized_key { "ca-key-${fqdn}":
 		ensure => present,
 		key    => file($pubkeyfile),
-		name   => "ca-key-${fqdn}",
 		user   => "ca",
 		tag    => "ca-${ca}",
 	}
