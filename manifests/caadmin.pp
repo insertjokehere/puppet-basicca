@@ -1,10 +1,11 @@
 define basicca::caadmin($ca=$name, $keyfile="/root/.ssh/ca.ssh", $pubkeyfile="/root/.ssh/ca.pub") {
 
 	@@ssh_authorized_key { "ca-key-${fqdn}":
-		ensure => present,
-		key    => file($pubkeyfile),
-		user   => "ca",
-		tag    => "ca-${ca}",
+		ensure  => present,
+		key     => file($pubkeyfile),
+		user    => "ca",
+		tag     => "ca-${ca}",
+		require => Exec["ssh-public-${fqdn}"],
 	}
 
 	exec { "ssh-private-${fqdn}":
