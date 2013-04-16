@@ -79,4 +79,24 @@ define basicca::ca($caroot, $ca_dn_commonName, $ca_dn_stateOrProvinceName, $ca_d
 		require => File["${caroot}/private"],
 	}
 
+	basicca::csr { "caCsr":
+		key => "${caroot}/private/ca.key", 
+		saveto => "${caroot}/private/ca.csr", 
+		owner => "ca", 
+		group => "ca",
+		config => "${caroot}/ca.cnf",
+		require => Basicca::Privatekey["caKey"],
+	}
+
+	basicca::signkey { "caCrt":
+		signkey => "${caroot}/private/ca.key",
+		csr     => "${caroot}/private/ca.csr",
+		saveto  => "${caroot}/certs/ca.crt",
+		days    => $issuelength,
+		owner   => "ca",
+		group   => "ca",
+		mode    => "0644",
+		require => Basicca::Csr["caCsr"],
+	}
+
 }
