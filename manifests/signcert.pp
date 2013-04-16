@@ -10,7 +10,7 @@ define basicca::signcert($signkey, $csr, $saveto, $days=365, $owner="root", $gro
 		owner   => $owner,
 		group   => $group,
 		mode    => $mode,
-		require => Exec[$name],
+		require => Exec["${name}-cert"],
 	}
 
 }
