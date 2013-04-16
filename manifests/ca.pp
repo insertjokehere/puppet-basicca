@@ -22,7 +22,7 @@ define basicca::ca($caroot, $ca_dn_commonName, $ca_dn_stateOrProvinceName, $ca_d
 
 	file { "${caroot}/ca.cnf":
 		ensure => file,
-		content => template("basicca/ca.cnf.erb")
+		content => template("basicca/ca.cnf.erb"),
 		owner => "ca",
 		group => "ca",
 		mode => "0640",
