@@ -1,15 +1,15 @@
 define basicca::csr($subject=undef, $key, $saveto, $owner="root", $group="root", $mode="0600", $config=undef) {
 
 	if ($config != undef) {
-		$config = "-config ${config}"
+		$config_cmd = "-config ${config}"
 	}
 
 	if ($subject != undef) {
-		$subject = "-subject '${subject}'"
+		$subject_cmd = "-subject '${subject}'"
 	}
 
 	exec { $name:
-		command => "/usr/bin/openssl req -new -key ${key} -out ${saveto} ${subject} ${config}",
+		command => "/usr/bin/openssl req -new -key ${key} -out ${saveto} ${subject_cmd} ${config_cmd}",
 		creates => $saveto,
 	}
 
