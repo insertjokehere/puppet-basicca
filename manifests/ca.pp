@@ -88,7 +88,7 @@ define basicca::ca($caroot, $ca_dn_commonName, $ca_dn_stateOrProvinceName, $ca_d
 		require => Basicca::Privatekey["caKey"],
 	}
 
-	basicca::signkey { "caCrt":
+	basicca::signcert { "caCrt":
 		signkey => "${caroot}/private/ca.key",
 		csr     => "${caroot}/private/ca.csr",
 		saveto  => "${caroot}/certs/ca.crt",
