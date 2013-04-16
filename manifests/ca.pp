@@ -99,7 +99,4 @@ define basicca::ca($caroot, $ca_dn_commonName, $ca_dn_stateOrProvinceName, $ca_d
 		require => Basicca::Csr["caCsr"],
 	}
 
-	Ssh_authorized_key <<| 	user == "ca",
-							tag  == "ca-${fqdn}" |>>
-
 }
