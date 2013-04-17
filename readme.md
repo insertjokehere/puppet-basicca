@@ -88,7 +88,7 @@ The ssh key will be needed later to sign certificate requests
 
 #### Signing the request
 
-On www.example.com, use scp to transfer the csr to `ca.example.com`:
+On `www.example.com`, use scp to transfer the csr to `ca.example.com`:
 
 	sudo -E scp www.example.com.csr ca@ca.example.com:/var/ca/
 
@@ -98,11 +98,11 @@ Then on `ca.example.com` as the ca user:
 
 openSSL will prompt you to confirm that you want to sign the request, then print details of the request. Take note of the serial number, as this is the file name of the signed certificate.
 
-Back on www.example.com, pull the signed certificate back (assuming the serial number was '01'):
+Back on `www.example.com`, pull the signed certificate back (assuming the serial number was '01'):
 
 	sudo -E scp ca@ca.example.com:~/certs/01.pem www.example.com.crt
 
-This certificate can now be used. Clients will need to retrieve a copy of the CA certificate (in the above example, it is stored in /var/ca/certs/ca.crt) and install it as a trusted root certificate
+This certificate can now be used. Clients will need to retrieve a copy of the CA certificate (in the above example, it is stored in `/var/ca/certs/ca.crt`) and install it as a trusted root certificate
 
 More details of the `openssl ca` command can be found at `ca(1)`
 
@@ -116,4 +116,3 @@ More details of the `openssl ca` command can be found at `ca(1)`
 
  * csr - Certificate Signing Request
  * ca - Certificate Authority
- 
