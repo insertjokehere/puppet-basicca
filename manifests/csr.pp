@@ -12,9 +12,9 @@ define basicca::csr($subject=undef, $key, $saveto, $owner="root", $group="root",
 		if (is_hash($subject)) {
 			# { CN=>'a', DC=>'b'} => ["CN=a", "DC=b"] => "CN=a/DC=b" => "-subject '/CN=a/DC=b'"
 			$dn = join(join_keys_to_values($subject,"="),"/")
-			$subject_cmd = "-subject '/${dn}'"
+			$subject_cmd = "-subj '/${dn}'"
 		} else {
-			$subject_cmd = "-subject '${subject}'"
+			$subject_cmd = "-subj '${subject}'"
 		}
 	} else {
 		$subject_cmd = ""
