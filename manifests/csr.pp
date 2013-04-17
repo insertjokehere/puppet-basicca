@@ -1,5 +1,9 @@
 define basicca::csr($subject=undef, $key, $saveto, $owner="root", $group="root", $mode="0600", $config=undef) {
 
+	if ($subject == undef and $config == undef) {
+		fail("Must specify one of subject or config")
+	}
+
 	if ($config != undef) {
 		$config_cmd = "-config ${config}"
 	}
