@@ -5,7 +5,15 @@ define basicca::csr($subject=undef, $key, $saveto, $owner="root", $group="root",
 	}
 
 	if ($subject != undef) {
-		$subject_cmd = "-subject '${subject}'"
+		if (is_hash($subject)) {
+			# { CN=>'a', DC=>'b'} => ["CN=a", "DC=b"] => "CN=a/DC=b" => "-subject '/CN=a/DC=b'"
+			$dn = join(join_keys_to_values($subject,"="),"/")
+			$subject_cmd = "-subject '/${dn}'"
+		} else {
+			$subject_cmd = "-subject '${subject}'"
+		}
+	} else {
+		$subject_cmd = ""
 	}
 
 	exec { $name:
