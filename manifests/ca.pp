@@ -3,7 +3,7 @@ define basicca::ca($caroot, $ca_dn_commonName, $ca_dn_stateOrProvinceName, $ca_d
 	user { "ca":
 		home => "${caroot}",
 		ensure => present,
-		shell => "/bin/false",
+		shell => "/bin/bash",
 		gid => "ca",
 		require => Group["ca"],
 	}
