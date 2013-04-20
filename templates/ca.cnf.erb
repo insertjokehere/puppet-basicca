@@ -78,6 +78,8 @@ default_md = sha1
 # No prompts
 prompt = no
 
+req_extensions = v3_req
+
 # This is for CA
 subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid:always,issuer
@@ -95,3 +97,6 @@ organizationName = <%= @ca_dn_organizationName %>
 
 [ root_ca_extensions ]
 basicConstraints = CA:true
+
+[ v3_req ]
+subjectAltName=$ENV::ALTNAME
