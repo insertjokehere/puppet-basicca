@@ -10,8 +10,10 @@ define basicca::csr($subject=undef, $key, $saveto, $owner="root", $group="root",
 			content => template("basicca/altName.cnf.erb")
 		}
 		$config_cmd = "-config ${altNameConfig}"
+		$req = File[$altNameConfig]
 	} elsif ($config != undef) {
 		$config_cmd = "-config ${config}"
+		$req = []
 	}
 
 	if ($altNames != undef) {
@@ -42,6 +44,7 @@ define basicca::csr($subject=undef, $key, $saveto, $owner="root", $group="root",
 		command => "/usr/bin/openssl req -new -key ${key} -out ${saveto} ${subject_cmd} ${config_cmd}",
 		creates => $saveto,
 		environment => "${altNamesEnv}=$altNameStr",
+		require => $req,
 	}
 
 	file { $saveto:
