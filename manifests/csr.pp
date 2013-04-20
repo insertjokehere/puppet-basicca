@@ -10,7 +10,7 @@ define basicca::csr($subject=undef, $key, $saveto, $owner="root", $group="root",
 			content => template("basicca/altName.cnf.erb")
 		}
 		$config_cmd = "-config ${altNameConfig}"
-	} else if ($config != undef) {
+	} elsif ($config != undef) {
 		$config_cmd = "-config ${config}"
 	}
 
