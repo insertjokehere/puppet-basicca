@@ -1,14 +1,16 @@
-define basicca::csr($subject=undef, $key, $saveto, $owner="root", $group="root", $mode="0600", $config=undef, $altNames=undef, $altNamesEnv="ALTNAME") {
+define basicca::csr($subject=undef, $key, $saveto, $owner="root", $group="root", $mode="0600", $config=undef, $altNames=undef, $altNamesEnv="ALTNAME", $altNameConfig="/tmp/openssl.cnf") {
 
 	if ($subject == undef and $config == undef) {
 		fail("Must specify one of subject or config")
 	}
 
 	if ($altNames != undef and $config == undef) {
-		fail("Must specify a config file for altNames to work")
-	}
-
-	if ($config != undef) {
+		file { $altNameConfig:
+			ensure => file,
+			content => template("basicca/altName.cnf.erb")
+		}
+		$config_cmd = "-config ${altNameConfig}"
+	} else if ($config != undef) {
 		$config_cmd = "-config ${config}"
 	}
 

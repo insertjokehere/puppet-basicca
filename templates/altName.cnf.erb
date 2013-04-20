@@ -1,0 +1,16 @@
+[ certificate_extensions ]
+# The signed certificate cannot be used as CA
+basicConstraints = CA:false
+
+[ req ]
+
+# Which hash to use
+default_md = sha1
+
+# No prompts
+prompt = no
+
+req_extensions = v3_req
+
+[ v3_req ]
+subjectAltName=$ENV::ALTNAME
