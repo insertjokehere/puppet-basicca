@@ -1,4 +1,4 @@
-define basicca::certrequest($keypath, $csrpath, $subject=undef, $config=undef, $altNames=undef, $keysize=2048, $owner="root", $group="root") {
+define basicca::certrequest($keypath, $csrpath, $subject=undef, $config=undef, $keysize=2048, $owner="root", $group="root") {
 
 	basicca::privatekey { "${name}-private":
 		saveto  => $keypath,
@@ -14,7 +14,6 @@ define basicca::certrequest($keypath, $csrpath, $subject=undef, $config=undef, $
 		config   => $config,
 		owner    => $owner,
 		group    => $group,
-		altNames => $altNames,
 		require  => Basicca::Privatekey["${name}-private"],
 	}
 
