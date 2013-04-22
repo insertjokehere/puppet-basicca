@@ -55,6 +55,9 @@ preserve = no
 policy = mypolicy
 x509_extensions = certificate_extensions
 
+#copy v3 extensions present in the request
+copy_extensions=copy
+
 [ mypolicy ]
 # Use the supplied information
 commonName = supplied
@@ -97,6 +100,3 @@ organizationName = <%= @ca_dn_organizationName %>
 
 [ root_ca_extensions ]
 basicConstraints = CA:true
-
-[ v3_req ]
-subjectAltName=$ENV::ALTNAME
