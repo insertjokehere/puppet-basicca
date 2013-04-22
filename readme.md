@@ -106,6 +106,31 @@ This certificate can now be used. Clients will need to retrieve a copy of the CA
 
 More details of the `openssl ca` command can be found at `ca(1)`
 
+### Creating a multinamed certificated
+
+SSLv3 supports certificates with multiple common names, using the `subjectAltName` extension. Producing a certificate request with this extension is slightly more complex then a standard request, as the extensions must be specified in a configuration file. For example, say that `www.example.com` also needs to be able to serve SSL requests for `example.com` and `img.example.com`. This could be achieved by issuing a certificate for `*.example.com`, but a better aproach would be:
+
+	import "basicca"
+
+	basicca::config { "/etc/apache2/www.example.com.cnf":
+		config => { "req" => {	"distinguished_name" => "dn",
+  								"default_md" => "sha1", 
+  								"prompt" => "no",
+  								"req_extensions" => "v3_req" }, 
+  								"v3_req" => { 	"subjectAltName" => "DNS:www.example.com,DNS:example.com,DNS:img.example.com",
+  												"basicConstraints" => "CA:false" },
+  								"dn" => { 	"CN" => "www.example.com",
+  											"C" => "NZ" } }
+  		}
+
+  	basicca::certrequest{ $fqdn:
+		keypath => "/etc/apache2/${fqdn}.key",
+		csrpath => "/etc/apache2/${fqdn}.csr",
+		config  => "/etc/apache2/www.example.com.cnf",
+		require => Basicca::Config["/etc/apache2/www.example.com.cnf"],
+  	}
+
+
 ## TODO
 
  * Automate signing of certificates by the CA
