@@ -1,0 +1,8 @@
+<% config.each_pair do |heading,keys| -%>
+[ <%= heading -%> ]
+
+<% keys.each_pair do |k,v| -%>
+<%= k -%> = <%= v -%>
+<% end -%>
+
+<% end -%>
