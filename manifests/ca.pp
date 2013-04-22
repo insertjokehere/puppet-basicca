@@ -1,4 +1,4 @@
-define basicca::ca($caroot, $ca_dn_commonName, $ca_dn_stateOrProvinceName, $ca_dn_countryName, $ca_dn_emailAddress, $ca_dn_organizationName, $issuelength=365, $keysize=2048) {
+define basicca::ca($caroot, $cadistinguisedname, $caconfig={}, $issuepolicy = {}, $issuelength=365, $keysize=2048) {
 
 	user { "ca":
 		home => "${caroot}",
@@ -20,9 +20,54 @@ define basicca::ca($caroot, $ca_dn_commonName, $ca_dn_stateOrProvinceName, $ca_d
 		require => User["ca"],
 	}
 
+	$defaultconfig = { 	"ca" => { "default_ca" => "puppetca", },
+						"req" => { 	"default_keyfile" 	=> "${caroot}/private/ca.key",
+									"default_md" 		=> "sha1",
+									"prompt"			=> "no",
+									"req_extensions" 	=> "v3_req",
+									"subjectKeyIdentifier" => "hash",
+									"authorityKeyIdentifier" => "keyid:always,issuer",
+									"string_mask" 		=> "utf8only",
+									"basicConstraints" 	=> "CA:true",
+									"distinguished_name"=> "ca_dn",
+									"x509_extensions" 	=> "ca_extensions", },
+						"ca_extensions" => { "basicConstraints" => "CA:true", },
+	 }
+
+	$defaultcacfg = { 	"dir" 			=> $caroot,
+						"certs" 		=> "${caroot}/certs",
+						"crl_dir" 		=> "${caroot}/crl",
+						"database"		=> "${caroot}/index.txt",
+						"new_certs_dir" => "${caroot}/certs",
+						"certificate"	=> "${caroot}/certs/ca.crt",
+						"serial"		=> "${caroot}/serial",
+						"crl"			=> "${caroot}/crl/crl.pem",
+						"private_key"	=> "${caroot}/private/ca.key",
+						"RANDFILE"		=> "${caroot}/private/.rand",
+						"x509_extensions" => "usr_cert",
+						"default_days"	=> $issuelength,
+						"default_crl_days" => "30",
+						"default_md"	=> "sha1",
+						"preserve"		=> "no",
+						"policy"		=> "capolicy",
+						"x509_extensions" => "certificate_extensions",
+						"copy_extensions" => "copy", }
+
+
+	$defaultpolicy = {
+		"commonName" 			=> "supplied",
+		"stateOrProvinceName"	=> "optional",
+		"countryName" 			=> "optional",
+		"emailAddress" 			=> "optional",
+		"organizationName" 		=> "optional",
+		"organizationalUnitName"=> "optional",
+	}
+
+	$config = merge($defaultconfig, { "puppetca" => merge($defaultcacfg, $caconfig) }, {'ca_dn' => $cadistinguisedname}, { "capolicy" => merge($defaultpolicy, $issuepolicy)})
+
 	file { "${caroot}/ca.cnf":
 		ensure => file,
-		content => template("basicca/ca.cnf.erb"),
+		content => template("basicca/openssl.cnf.erb"),
 		owner => "ca",
 		group => "ca",
 		mode => "0640",
