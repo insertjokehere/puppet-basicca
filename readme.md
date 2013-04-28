@@ -106,7 +106,7 @@ This certificate can now be used. Clients will need to retrieve a copy of the CA
 
 More details of the `openssl ca` command can be found at `ca(1)`
 
-### Creating a multinamed certificated
+### Creating a multinamed certificate
 
 SSLv3 supports certificates with multiple common names, using the `subjectAltName` extension. Producing a certificate request with this extension is slightly more complex then a standard request, as the extensions must be specified in a configuration file. For example, say that `www.example.com` also needs to be able to serve SSL requests for `example.com` and `img.example.com`. This could be achieved by issuing a certificate for `*.example.com`, but a better aproach would be:
 
