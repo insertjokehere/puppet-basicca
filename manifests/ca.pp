@@ -50,7 +50,6 @@ define basicca::ca($caroot, $cadistinguisedname, $caconfig={}, $issuepolicy = {}
 						"default_md"	=> "sha1",
 						"preserve"		=> "no",
 						"policy"		=> "capolicy",
-						"x509_extensions" => "certificate_extensions",
 						"copy_extensions" => "copy", }
 
 
