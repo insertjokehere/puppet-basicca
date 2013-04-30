@@ -44,7 +44,6 @@ define basicca::ca($caroot, $cadistinguisedname, $caconfig={}, $issuepolicy = {}
 						"crl"			=> "${caroot}/crl/crl.pem",
 						"private_key"	=> "${caroot}/private/ca.key",
 						"RANDFILE"		=> "${caroot}/private/.rand",
-						"x509_extensions" => "usr_cert",
 						"default_days"	=> $issuelength,
 						"default_crl_days" => "30",
 						"default_md"	=> "sha1",
