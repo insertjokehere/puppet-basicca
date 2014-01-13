@@ -1,4 +1,4 @@
-define basicca::selfsignedcert($subject=undef, $config=undef, $keypath, $csrpath, $certpath, $owner="root", $group="root", $keysize=2048, $certmode="0644", $issuelength=365) {
+define basicca::selfsignedcert($subject=undef, $config=undef, $keypath, $csrpath, $certpath, $owner="root", $group="root", $keysize=4096, $certmode="0644", $issuelength=365) {
 
 	basicca::privatekey { "${name}-private":
 		saveto  => $keypath,

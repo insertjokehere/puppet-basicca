@@ -1,4 +1,4 @@
-define basicca::ca($caroot, $cadistinguisedname, $caconfig={}, $issuepolicy = {}, $issuelength=365, $keysize=2048) {
+define basicca::ca($caroot, $cadistinguisedname, $caconfig={}, $issuepolicy = {}, $issuelength=365, $keysize=4096) {
 
 	user { "ca":
 		home => "${caroot}",
