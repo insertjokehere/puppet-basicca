@@ -21,7 +21,7 @@ define basicca::csr($subject=undef, $key, $saveto, $owner="root", $group="root",
 	}
 
 	exec { $name:
-		command => "/usr/bin/openssl req -new -key ${key} -out ${saveto} ${subject_cmd} ${config_cmd}",
+		command => "/usr/bin/openssl req -new -key ${key} -out ${saveto} -sha256 ${subject_cmd} ${config_cmd}",
 		creates => $saveto,
 		require => $req,
 	}

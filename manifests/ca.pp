@@ -22,7 +22,7 @@ define basicca::ca($caroot, $cadistinguisedname, $caconfig={}, $issuepolicy = {}
 
 	$defaultconfig = { 	"ca" => { "default_ca" => "puppetca", },
 						"req" => { 	"default_keyfile" 	=> "${caroot}/private/ca.key",
-									"default_md" 		=> "sha1",
+									"default_md" 		=> "sha256",
 									"prompt"			=> "no",
 									"req_extensions" 	=> "v3_req",
 									"subjectKeyIdentifier" => "hash",
