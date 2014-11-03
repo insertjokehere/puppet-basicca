@@ -28,7 +28,7 @@ Once stdlib is installed, install basicca
 			keypath		=> "/etc/apache2/server.key",
 			csrpath		=> "/etc/apache2/server.csr",
 			certpath	=> "/etc/apache2/server.crt",
-			keysize		=> 2048,
+			keysize		=> 4096,
 			issuelength => 365,
 			subject		=> { "CA" => $fqdn,
 							 "C"  => "NZ",
@@ -37,7 +37,7 @@ Once stdlib is installed, install basicca
 	}
 
 The subject can be specified as a hash (as above) or as a string (ie `/CA=www.example.com/C=NZ`), and the certificate will be valid for the number of days specified. Note that the certificate will not be reissued once it expires.
-By default, all produced files are owned by root, the csr and key files are set to have mode 0600 (`rw-------`), and the certificate is set to mode 0644 (`rw-r--r--`)
+By default, all produced files are owned by root, the csr and key files are set to have mode 0600 (`rw-------`), and the certificate is set to mode 0644 (`rw-r--r--`). By default puppet-basicca generates 4096 bit RSA keys, and signs the certificates with SHA256
 
 ### Creating a simple certificate authority
 
@@ -114,7 +114,7 @@ SSLv3 supports certificates with multiple common names, using the `subjectAltNam
 
 	basicca::config { "/etc/apache2/www.example.com.cnf":
 		config => { "req" => {	"distinguished_name" => "dn",
-  								"default_md" => "sha1", 
+  								"default_md" => "sha256", 
   								"prompt" => "no",
   								"req_extensions" => "v3_req" }, 
   								"v3_req" => { 	"subjectAltName" => "DNS:www.example.com,DNS:example.com,DNS:img.example.com",
